@@ -1,0 +1,103 @@
+{% extends 'base.html' %}{% block content %}
+<h2 class="display-5 fw-bold">إدارة المخزون</h2>
+<form id="stockForm" class="mb-4 pb-3 border-bottom border-black">
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label for="productNames" class="fs-3 fw-bold">المنتج</label>
+      <input
+        type="text"
+        name=""
+        id=""
+        list="productNames"
+        class="form-control form-control-lg mt-1 productSearch"
+        placeholder="بحث عن منتج"
+      />
+      <datalist id="productNames" class=""> </datalist>
+    </div>
+
+    <div class="col-md-2 mb-3">
+      <label for="quantity" class="fs-3 fw-bold">الكمية الجديدة</label>
+      <input
+        type="number"
+        class="form-control form-control-lg mt-1"
+        id="quantity"
+        name="quantity"
+        required
+      />
+    </div>
+    <div class="col d-flex align-items-end mb-3">
+      <button type="submit" class="btn btn-lg btn-outline-success" disabled>
+        حفظ
+      </button>
+    </div>
+  </div>
+</form>
+
+<div class="card bg-secondary-subtle shadow">
+  <div class="card-body">
+    <table
+      id="stockTable"
+      class="table table-striped table-bordered table-dark text-center pt-2"
+    >
+      <thead>
+        <tr class="fs-4">
+          <th class="text-center">ID</th>
+          <th class="text-center">المنتج</th>
+          <th class="text-center">السعر</th>
+          {% if is_admin %}
+          <th class="text-center">المبيعات</th>
+          {% endif %}
+          <th class="text-center">الكمية المتبقية</th>
+          <th class="text-center">آخر تعديل</th>
+        </tr>
+      </thead>
+      <tbody class="fs-5"></tbody>
+    </table>
+  </div>
+</div>
+<script>
+  $("#quantity, input.productSearch").on("input", function () {
+    let qtyValues = parseInt($("#quantity").val());
+    let proValues = $("input.productSearch").val();
+    if (qtyValues && proValues) {
+      $("#stockForm button").attr("disabled", false);
+    } else {
+      $("#stockForm button").attr("disabled", true);
+    }
+  });
+  $("#stockForm").on("submit", function (e) {
+    e.preventDefault();
+    var qty = $("#quantity").val(); // quentity
+    let proValues = $("input.productSearch").val();
+    var productId = $("datalist").find(`option[value="${proValues}"]`).text(); // product id
+
+    var prodData = {
+      productId: productId,
+      quentity: qty,
+    };
+    if (qty && productId) {
+      $.ajax({
+        url: "/stock_add",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(prodData),
+        dataType: "json",
+        success: function (response) {
+          swal
+            .fire({
+              title: response.message,
+              icon: "success",
+              position: "bottom-start",
+              showConfirmButton: false,
+              timer: 1500,
+            })
+            .then(() => setTimeout(() => window.location.reload(), 1000));
+        },
+        error: function (error) {
+          console.error("Error updating stock: ", error);
+        },
+      });
+    }
+  });
+</script>
+{% endblock %}

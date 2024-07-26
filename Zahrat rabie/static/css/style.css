@@ -1,0 +1,50 @@
+@font-face {
+  font-family:mainFont;
+  src: url('fonts/Amiri-Bold.ttf') format('truetype');
+}
+
+body {
+  background: linear-gradient(to left, #dcdcdc, #d3d3d3, #d9d9d9, #d9d6d6cf, #d9d9d9dd) !important;
+  font-family: mainFont !important;
+  /* font-family: 'Times New Roman', Times, serif !important; */
+}
+#page-loader {
+  position: fixed; /* Keep it on top of content */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Adjust height if content overflows */
+  background-color: rgba(245, 242, 242, 0.413); /* Optional background color */
+  z-index: 9999; /* Ensure it's above other elements */
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* Adjust opacity */
+}
+
+
+/* Special styling for input fields */
+input[type="number"], input[type="text"] {
+    text-align: center;
+    background-color: #fff;
+  }
+select {
+  background-color: #fff !important;
+}
+
+.dropdown-menu[data-bs-popper].in-list{
+  right: -75%;
+}
+
+#mbtn {
+  position: fixed;
+  left: 3.5vw;
+  bottom: 10vh;
+}
+
+

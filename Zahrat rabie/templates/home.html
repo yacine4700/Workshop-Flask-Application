@@ -1,0 +1,201 @@
+{% extends 'base.html' %} {% block content %}
+<!-- Header -->
+<div class="row mb-4 mt-3">
+  <div class="col">
+    <p class="fs-1 fw-bold mb-1">لوحة التحكم</p>
+  </div>
+</div>
+
+<div class="card shadow rounded-0 mb-4 bg-light">
+  <div class="card-body">
+    <!-- Overview Cards
+    <div class="row mb-4">
+      <div class="col-md-3 mb-4">
+        <div
+          class="card text-center h-100"
+          style="background-color: rgba(34, 34, 255, 0.481)"
+        >
+          <div class="card-body">
+            <h5 class="card-title fs-4 fw-bolder">إجمالي المبيعات</h5>
+            <p id="main-total-sales" class="card-text fs-5 fw-bold"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div
+          class="card text-center h-100"
+          style="background-color: rgba(34, 218, 255, 0.481)"
+        >
+          <div class="card-body">
+            <h5 class="card-title fs-4 fw-bolder">إجمالي الزبائن</h5>
+            <p id="total-customers" class="card-text fs-5 fw-bold"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div
+          class="card text-center h-100"
+          style="background-color: rgba(34, 255, 203, 0.481)"
+        >
+          <div class="card-body">
+            <h5 class="card-title fs-4 fw-bolder">أحسن منتج</h5>
+            <p id="top-product" class="card-text fs-5 fw-bold"></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 mb-4">
+        <div
+          class="card text-center h-100"
+          style="background-color: rgba(255, 189, 34, 0.481)"
+        >
+          <div class="card-body">
+            <h5 class="card-title fs-4 fw-bolder">نسبة النمو</h5>
+            <p id="main-growth" class="card-text fs-5 fw-bold"></p>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <!-- main pages -->
+    <div class="row mb-4">
+      <div class="col-md-4 my-2">
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0"
+          href="{{ url_for('products_list') }}"
+        >
+          <div class="card shadow rounded-0 bg-primary-subtle h-100">
+            <div class="card-body row">
+              <div class="col-md-2 d-flex me-1">
+                <div
+                  class="text-center fs-2 align-self-center text-success p-1"
+                >
+                  <i class="fas fa-crown"></i>
+                </div>
+              </div>
+              <div class="col-md-9 text-center">
+                <div
+                  class="card-title display-3 fw-bold border-bottom border-success"
+                >
+                  منتجات
+                </div>
+                <div class="card-text text-muted fs-5">
+                  تصفح المنتجات المختلفة
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      <div class="col-md-4 my-2">
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0"
+          href="{{ url_for('customers_list') }}"
+        >
+          <div class="card h-100 shadow rounded-0 bg-info-subtle">
+            <div class="card-body row">
+              <div class="col-md-2 d-flex me-1">
+                <div class="text-center fs-2 align-self-center text-danger p-1">
+                  <i class="fas fa-user"></i>
+                </div>
+              </div>
+              <div class="col-md-9 text-center">
+                <div
+                  class="card-title display-3 fw-bold border-bottom border-danger"
+                >
+                  الزبائن
+                </div>
+                <div class="card-text text-muted fs-5">
+                  تصفح معلومات مختلف الزبائن
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% if is_admin %}
+      <div class="col-md-4 my-2">
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0"
+          href="{{ url_for('invoices_list') }}"
+        >
+          <div class="card h-100 shadow rounded-0 bg-warning-subtle">
+            <div class="card-body row">
+              <div class="col-md-2 d-flex me-1">
+                <div class="text-center fs-2 align-self-center text-dark p-1">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+              </div>
+              <div class="col-md-9 text-center">
+                <div
+                  class="card-title display-3 fw-bold border-bottom border-dark"
+                >
+                  المبيعات
+                </div>
+                <div class="card-text text-muted fs-5">
+                  تحليل نتائج المبيعات من مختلف الجوانب
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endif %}
+      <div class="col-md-4 my-2">
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0"
+          href="{{ url_for('receipt') }}"
+        >
+          <div class="card h-100 shadow rounded-0 bg-success-subtle">
+            <div class="card-body row">
+              <div class="col-md-2 d-flex me-1">
+                <div class="text-center fs-2 align-self-center text-info p-1">
+                  <i class="fas fa-plus"></i>
+                </div>
+              </div>
+              <div class="col-md-9 text-center">
+                <div
+                  class="card-title display-3 fw-bold border-bottom border-info"
+                >
+                  وصل
+                </div>
+                <div class="card-text text-muted fs-5">قم بإنشاء وصل جديد</div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% if is_admin or is_user %}
+      <div class="col-md-4 my-2">
+        <a
+          class="link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0"
+          href="{{ url_for('stock') }}"
+        >
+          <div class="card h-100 shadow rounded-0 bg-danger-subtle">
+            <div class="card-body row">
+              <div class="col-md-2 d-flex me-1">
+                <div
+                  class="text-center fs-2 align-self-center text-primary p-1"
+                >
+                  <i class="fas fa-store"></i>
+                </div>
+              </div>
+              <div class="col-md-9 text-center">
+                <div
+                  class="card-title display-3 fw-bold border-bottom border-primary"
+                >
+                  المخزون
+                </div>
+                <div class="card-text text-muted fs-5">
+                  قم بتتبع المخزون وإضافة المنتجات
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{%endblock%}

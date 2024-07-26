@@ -1,0 +1,134 @@
+{% extends 'base.html' %} {% block content %}
+
+<p class="text-center fs-1 py-3">
+  زبائن <span class="fw-bold"> زهرة الربيع</span>
+</p>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs fs-4" id="myTab" role="tablist" data-bs-theme="dark">
+  <li class="nav-item rounded-pill" role="presentation">
+    <a
+      class="nav-link active border"
+      id="active-tab"
+      data-bs-toggle="tab"
+      href="#active"
+      role="tab"
+      aria-controls="active"
+      aria-selected="true"
+      >معلومات الزبائن</a
+    >
+  </li>
+  <li class="nav-item rounded-pill" role="presentation">
+    <a
+      class="nav-link border"
+      id="link1-tab"
+      data-bs-toggle="tab"
+      href="#link1"
+      role="tab"
+      aria-controls="link1"
+      aria-selected="false"
+      >الدفعات</a
+    >
+  </li>
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content mt-3" id="myTabContent">
+  <div
+    class="tab-pane fade show active"
+    id="active"
+    role="tabpanel"
+    aria-labelledby="active-tab"
+  >
+    <div class="d-flex pb-1 mb-4 mx-5 border-bottom border-success">
+      <div class="me-auto p-2">
+        <input
+          type="text"
+          id="searchField"
+          class="form-control bg-light border rounded-0 border-black searchField"
+          placeholder="ابحث في قائمة الزبائن"
+        />
+      </div>
+      <div class="p-2 fs-3 text-success"><p class="m-0">عدد الزبائن</p></div>
+      <div class="p-2 fs-3 text-success">
+        <p id="total-custs" class="fw-bold m-0"></p>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4 p-2 card-container">
+      {% for customer in customers %}
+      <div id="cust-{{customer[0]}}" class="col">
+        <div class="card h-100 rounded-0 bg-body-tertiary">
+          <div class="card-body">
+            <h5 class="card-title fs-3 fw-bold border-bottom border-black pb-1">
+              <b>{{ loop.index }}#</b>
+              <span class="title-name">{{ customer.name }}</span>
+            </h5>
+            <p class="card-subtitle fs-4 mb-2 text-muted">
+              الهاتف: {{ customer.phone }}
+            </p>
+            <p class="card-text fs-4">العنوان: {{ customer.address }}.</p>
+          </div>
+          {% if is_admin or is_user %}
+          <div class="card-footer text-center">
+            <button
+              class="btn btn-outline-primary rounded-0 ms-auto modify-customer"
+              data-customer-id="{{ customer.id }}"
+              data-name="{{ customer.name }}"
+              data-address="{{ customer.address }}"
+              data-phone="{{ customer.phone }}"
+            >
+              تعديل
+            </button>
+            <button
+              class="btn btn-danger rounded-0 ms-2 delete-customer"
+              data-customer-id="{{ customer.id }}"
+              data-name="{{ customer.name }}"
+            >
+              حذف
+            </button>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="link1"
+    role="tabpanel"
+    aria-labelledby="link1-tab"
+  >
+    <div class="card bg-light">
+      {% if is_admin or is_user %}
+      <div class="card-body">
+        <table
+          id="cust-finance"
+          class="table text-center table-striped-columns table-bordered pt-2 table-secondary border-black"
+        >
+          <thead>
+            <tr class="fs-4">
+              <th class="text-center">الرقم</th>
+              <th class="text-center">الزبون</th>
+              <th class="text-center">قيمة المشتريات</th>
+              <th class="text-center">المبلغ المدفوع</th>
+              <th class="text-center">الصافي</th>
+              <th class="text-center">آخر دفعة</th>
+              <th class="text-center">إضافة دفعة</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      {% else %}
+      <div class="card-body">
+        <div class="d-flex">
+          <p class="fs-4 m-auto">محتوى غير متوفر</p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{%endblock%}

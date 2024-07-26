@@ -1,0 +1,144 @@
+{% extends 'base.html' %} {% block content %}{% if is_admin %}
+<h1 class="text-center my-3 fw-bold display-2">تقرير تحليل المبيعات</h1>
+
+<div class="card rounded-0 bg-body-secondary p-3 my-2">
+  <div id="report-container">
+    <div class="row fw-bold my-2">
+      <div class="col-md-3">
+        <div class="card shadow bg-white rounded-0 h-100">
+          <div class="card-header fs-5">حجم المبيعات السنوي</div>
+          <div class="card-body">
+            <p
+              class="card-text fs-3 text-success text-center my-3 currency"
+              id="total-sales"
+            ></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow bg-white rounded-0 h-100">
+          <div class="card-header fs-5">حجم المبيعات الشهري</div>
+          <div class="card-body">
+            <p
+              class="card-text fw-bold fs-4 text-success text-center my-3 currency"
+              id="current-month-sales"
+            ></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow bg-white rounded-0 h-100">
+          <div class="card-header fs-5">حجم المبيعات الشهر الأخير</div>
+          <div class="card-body">
+            <p
+              class="card-text fw-bold fs-4 text-success text-center my-3 currency"
+              id="prev-month-sales"
+            ></p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card shadow bg-white rounded-0 h-100">
+          <div class="card-header fs-5">معدل نسبة النمو</div>
+          <div class="card-body">
+            <p
+              class="card-text fw-bold fs-4 text-center my-3 growth"
+              id="growth-mean"
+            ></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-2">
+      <!-- Total Sales -->
+
+      <div class="col-md-6">
+        <div class="card shadow bg-white my-0 rounded-0 h-100">
+          <div class="card-body">
+            <div class="card-title text-center border-bottom fs-2">
+              المبيعات حسب الشهور
+            </div>
+            <div>
+              <canvas id="monthly-chart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <!-- Sales by Month -->
+        <div class="card shadow bg-white my-0 rounded-0 h-100">
+          <div class="card-body">
+            <div class="card-title text-center border-bottom fs-2">
+              تفاصيل المبيعات شهريا
+            </div>
+            <table
+              class="table table-striped data-table text-center"
+              id="sales-by-month-table"
+            >
+              <thead>
+                <tr class="bg-primary-subtle">
+                  <th class="text-center">الشهر</th>
+                  <th class="text-center">حجم المبيعات</th>
+                  <th class="text-center">عدد المبيعات</th>
+                  <th class="text-center">نسبة النمو</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row my-2">
+      <div class="col-md-4">
+        <div class="card shadow bg-white my-0 rounded-0 h-100">
+          <div class="card-body">
+            <div class="card-title text-center border-bottom fs-2">
+              تفاصيل الوصل
+            </div>
+            <div
+              class="table table-striped data-table p-2"
+              id="invoices-details"
+            ></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card shadow bg-white my-0 rounded-0 h-100">
+          <div class="card-body">
+            <div class="card-title fs-2 text-center border-bottom">
+              أحسن المنتجات
+            </div>
+            <canvas class="mt-5" id="top-products"></canvas>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <!-- Sales by Customer -->
+        <div class="card shadow bg-white my-0 rounded-0 h-100">
+          <div class="card-body">
+            <div class="card-title text-center border-bottom fs-2">
+              المبيعات حسب الزبائن
+            </div>
+            <div class="p-1 mt-2">
+              <table
+                class="table table-striped data-table p-2 mt-3"
+                id="sales-by-customer-table"
+              >
+                <thead>
+                  <tr class="bg-primary-subtle">
+                    <th class="text-center fs-5">الزبون</th>
+                    <th class="text-center fs-5">حجم المبيعات</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/analysis.js') }}"></script>
+{% endif %} {%endblock%}

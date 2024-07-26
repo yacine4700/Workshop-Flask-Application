@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for ('static',filename = 'img/logo.png') }}"
+      type="image/x-icon"
+    />
+    <title>زهرة الربيع</title>
+    <!-- main css -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/style.css') }}"
+    />
+    <!-- bootstrap 5 -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/bootstrap.rtl.min.css') }}"
+    />
+
+    <!-- font awesome icons -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/all.css') }}"
+    />
+    <!-- sweet alert 2 -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/sweetalert2.min.css') }}"
+    />
+    <!-- jquery datatables -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/jquery.dataTables.min.css') }}"
+    />
+    <!-- bootstrap datatables -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/dataTables.bootstrap5.min.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/chart.umd.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/jquery-3.7.0.min.js') }}"></script>
+    <script>
+      function sortSelectList(selectElement) {
+        // Get all `<option>` elements from the select list
+        const options = $(selectElement).find("option");
+
+        // Convert options to an array for sorting
+        const optionsArray = options.toArray();
+
+        // Sort the options array alphabetically by text content
+        optionsArray.sort((a, b) => a.text.localeCompare(b.text));
+
+        // Clear the select list (optional, if you want to remove existing options)
+        $(selectElement).empty();
+
+        // Append the sorted options back to the select list
+        $(optionsArray).appendTo(selectElement);
+      }
+    </script>
+  </head>
+  <body>
+    {% include 'navbar.html' %}{% include 'modal.html' %} {% with messages =
+    get_flashed_messages() %} {% if messages %}
+    <div
+      class="alert alert-dismissible fade show w-50 m-auto alert-primary mt-2 rounded-0"
+      style="position: fixed; top: 10%; right: 25%; z-index: 10000"
+      role="alert"
+    >
+      <div class="fs-5 text-center m-0">
+        {% for message in messages %}
+        <p class="m-0">{{ message }}</p>
+        {% endfor %}
+      </div>
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
+    </div>
+    {% endif %} {% endwith %}
+    <div
+      id="page-loader"
+      class="d-flex justify-content-center align-items-center"
+    >
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="overlay"></div>
+    </div>
+
+    <main>
+      <div class="container">{% block content %} {% endblock content %}</div>
+    </main>
+
+    <script src="{{ url_for ('static',filename = 'js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/main.js') }}"></script>
+  </body>
+</html>

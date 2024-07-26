@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>طباعة وصل</title>
+    <!-- bootstrap 5 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for ('static',filename = 'css/bootstrap.rtl.min.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for ('static',filename = 'css/style.css') }}"
+    />
+    <!-- font awesome icons -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for ('static',filename = 'css/all.css') }}"
+    />
+    <style>
+      @media print {
+        .col-md-6 {
+          width: 50%;
+          float: left;
+          margin: 0;
+          padding: 0;
+        }
+        .row {
+          display: flex;
+          flex-wrap: wrap;
+          margin: 0;
+          padding: 0;
+        }
+
+        /* Add any other selectors you want to hide during print */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="pdf-content">
+      <form
+        id="pdfGen"
+        action="{{ url_for('generate_pdf') }}"
+        method="post"
+        class="d-print-none"
+      >
+        <div
+          id="button-to-remove"
+          class="d-flex justify-content-end mt-1 mb-0 p-2"
+        >
+          <button
+            type="submit"
+            id="printBtn"
+            class="btn btn-outline-success mx-1"
+          >
+            طباعة <i class="fas fa-print"></i>
+          </button>
+        </div>
+      </form>
+      <div class="row text-center">
+        <div class="col-md-12"><p class="display-4">وصــل</p></div>
+      </div>
+      <hr class="m-2" />
+      <div class="row text-right fs-6">
+        <div class="col-md-6">
+          <p class="fs-5">
+            <span class="fw-bold"># رقم الوصل </span>
+            <span id="invoice-number">{{ invoice_number }}</span><br />
+            <span class="fw-bold">التاريخ: </span>
+            <span id="invoice-date">{{ invoice_date }}</span>
+          </p>
+        </div>
+        <div class="col-md-6">
+          <span class="fw-bold fs-5">سلمت إلى:</span>
+          <span id="bill-to-name">
+            {{ customer_name }}<br />
+            {{ customer_address }}<br />
+            {{ customer_phone }}
+          </span>
+        </div>
+      </div>
+      <hr class="my-2 mx-5" />
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-sm py-2 my-1">
+            <thead>
+              <tr>
+                <th class="fs-5 fw-bold">#</th>
+                <th class="fs-5 fw-bold">التعيين</th>
+                <th class="fs-5 fw-bold">الكمية</th>
+                <th class="fs-5 fw-bold">سعر الوحدة</th>
+                <th class="fs-5 fw-bold">المجموع</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              {% for product in invoice %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ product.item }}</td>
+                <td>{{ product.qty }}</td>
+                <td>{{ product.price}}</td>
+                <td class="fw-bold">{{ product.subtotal|format_currency }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div
+        class="d-flex flex-column align-items-end text-black text-right mt-5"
+      >
+        <div class="ms-auto pt-auto">
+          <div class="mb-1">
+            <p class="d-inline fs-6">المجموع</p>
+            <span class="fs-6 fw-bold ms-2"
+              >{{ invoice_total|format_currency }}</span
+            >
+          </div>
+          <div class="mb-1">
+            <p class="d-inline fs-6">دفع</p>
+            <span class="fs-6 fw-bold ms-2"
+              >{{ invoice_verssement|format_currency }}</span
+            >
+          </div>
+
+          <hr class="m-2" />
+
+          <div class="mb-1">
+            <p class="d-inline fs-6">المجموع الصافي:</p>
+            <span class="fs-6 fw-bold ms-2"
+              >{{ (invoice_total - invoice_verssement)|format_currency }}</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <p class="fs-6">زهرة الربيع تشكركم لثقتكم في منتجاتها</p>
+      </div>
+    </div>
+    <script src="{{ url_for ('static',filename = 'js/sweetalert2.all.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ url_for ('static',filename = 'js/main.js') }}"></script>
+    <script>
+      formatCurrency();
+    </script>
+  </body>
+</html>
